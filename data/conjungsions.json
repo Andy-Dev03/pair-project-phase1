@@ -1,0 +1,14 @@
+[
+  {
+    "CategoryId": 1,
+    "GameId": 1
+  },
+  {
+    "CategoryId": 2,
+    "GameId": 2
+  },
+  {
+    "CategoryId": 3,
+    "GameId": 3
+  }
+]

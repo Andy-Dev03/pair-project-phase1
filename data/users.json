@@ -1,0 +1,20 @@
+[
+  {
+    "userName": "Bambang",
+    "email": "bambang@mail.com",
+    "password": "bambang1",
+    "role": "Developer"
+  },
+  {
+    "userName": "Nini",
+    "email": "nini@mail.com",
+    "password": "nini1",
+    "role": "Buyer"
+  },
+  {
+    "userName": "Mamat",
+    "email": "mamat@mail.com",
+    "password": "mamat1",
+    "role": "Developer"
+  }
+]
