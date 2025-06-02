@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div>
+        <div>
+            <div>
+                <div>
+                    <h3>Register</h3>
+                </div>
+
+                <div>
+                    <form action="/register" method="post">
+                        <div>
+                            <label for="userName">Username</label>
+                            <input type="text" name="userName" id="userName" placeholder="Insert Username">
+                        </div>
+
+                        <div>
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" placeholder="Insert Email">
+                        </div>
+
+                        <div>
+                            <label for="password">Password</label>
+                            <input type="text" name="password" id="password" placeholder="Insert Password">
+                        </div>
+
+                        <div>
+                            <label for="role">Role</label>
+                            <select name="role" id="role">
+                                <option value="" disabled selected>Choose Role</option>
+                                <% role.forEach(r => { %>
+                                    <option value="<%= r %>"><%= r %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+
+                        <button type="submit">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
