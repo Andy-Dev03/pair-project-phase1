@@ -1,14 +1,16 @@
 const express = require('express')
-const Controller = require('../controllers/controller')
+const Controller = require('../controllers/allController')
+const UserController = require('../controllers/userController')
 const router = express.Router()
+
 
 //Home, Register, Log in, dan Logut
 router.get('/', Controller.home)
-router.get('/register', Controller.X)
-router.post('/register', Controller.X)
-router.get('/login', Controller.X)
-router.post('/login', Controller.X)
-router.get('/logout', Controller.X)
+router.get('/register', UserController.registerForm)
+router.post('/register', UserController.savedRegister)
+router.get('/login', UserController.loginForm)
+router.post('/login', UserController.savedLogin)
+router.get('/logout', UserController.X)
 
 //Games
 router.get('/games', Controller.X)
