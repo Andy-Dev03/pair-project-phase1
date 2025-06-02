@@ -1,0 +1,26 @@
+[
+  {
+    "firstName": "Bambang",
+    "lastName": "Susanto",
+    "bio": "I'm Boy",
+    "location": "Suroboyo",
+    "wallet" : 0,
+    "UserId" : 1
+  },
+  {
+    "firstName": "Nini",
+    "lastName": "Pratewi",
+    "bio": "I'm Girl",
+    "location": "Padang",
+    "wallet" : 0,
+    "UserId" : 2
+  },
+  {
+    "firstName": "Sri",
+    "lastName": "Santi",
+    "bio": "I'm Super Woman",
+    "location": "Tanggerang",
+    "wallet" : 0,
+    "UserId" : 3
+  }
+]

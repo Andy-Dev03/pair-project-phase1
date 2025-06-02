@@ -1,0 +1,48 @@
+TABLE "Users" {
+  id SERIAL [PRIMARY KEY]
+  userName VARCHAR
+  email VARCHAR
+  password VARCHAR
+  role VARCHAR
+}
+
+TABLE "Profiles" {
+  id SERIAL [PRIMARY KEY]
+  namaDepan VARCHAR
+  namaBelakang VARCHAR
+  bio TEXT
+  location VARCHAR
+  wallet INTEGER
+  UserId INTEGER
+}
+
+TABLE "Games" {
+  id SERIAL [PRIMARY KEY]
+  gameName VARCHAR
+  UserId INTEGER
+}
+
+TABLE "Categories" {
+  id SERIAL [PRIMARY KEY]
+  categoryName VARCHAR
+
+}
+
+TABLE "GameCategories" {
+  id SERIAL [PRIMARY KEY]
+  CategoryId INTEGER
+  GameId INTEGER
+}
+
+TABLE "Purchases" {
+  id SERIAL [PRIMARY KEY]
+  UserId INTEGER
+  GameId INTEGER
+  purchaseDate DATE
+}
+Ref : "Users".id - "Profiles".UserId
+Ref : "Users".id < "Games".UserId 
+Ref : "Games".id < "GameCategories".GameId
+Ref : "Categories".id < "GameCategories".CategoryId
+Ref : "Users".id < "Purchases".UserId
+Ref : "Games".id < "Purchases".GameId

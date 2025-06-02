@@ -1,0 +1,14 @@
+[
+  {
+    "gameName": "PUBG",
+    "UserId": 1
+  },
+  {
+    "gameName" : "Valorant",
+    "UserId": 2
+  },
+  {
+    "gameName" : "Mobile Legend",
+    "UserId": 3
+  }
+]
