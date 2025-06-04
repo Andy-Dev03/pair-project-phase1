@@ -27,10 +27,48 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Game.init({
-    gameName: DataTypes.STRING,
-    UserId: DataTypes.INTEGER,
-    imageUrl: DataTypes.STRING,
-    createdAt: DataTypes.DATE
+    gameName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg : 'Game Name is required'
+        },
+        notEmpty: {
+          args: true,
+          msg : 'Game Name is required'
+        }
+      }
+    },
+    UserId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg : 'User is required'
+        },
+        notEmpty: {
+          args: true,
+          msg : 'User is required'
+        }
+      }
+    },
+    imageUrl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg : 'Image Url is required'
+        },
+        notEmpty: {
+          args: true,
+          msg : 'Image Url is required'
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Game',

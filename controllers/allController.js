@@ -1,6 +1,6 @@
 const { Op } = require("sequelize")
 const { User, Purchase, Profile, Game, Category, GameCategory } = require('../models')
-const user = require("../models/user")
+const { sendEmail } = require("../helpers/helper")
 
 class Controller {
     static async home(req, res) {
@@ -33,11 +33,11 @@ class Controller {
                 ],
             }
 
-            if(search) {
-                if(!option.where) option.where = {}
+            if (search) {
+                if (!option.where) option.where = {}
                 option.where = {
-                    gameName : {
-                        [Op.iLike] : `%${search}%`
+                    gameName: {
+                        [Op.iLike]: `%${search}%`
                     }
                 }
             }
@@ -76,6 +76,16 @@ class Controller {
                 GameId: id,
                 purchaseDate: new Date(),
             })
+
+            const user = await User.findByPk(userId);
+            const game = await Game.findByPk(id);
+
+            if (user && game) {
+                const subject = `Thankyou for buy the game: ${game.gameName}`;
+                const message = `Hi ${user.userName},\n\nYou succes buy "${game.gameName}". Enjoyy!`;
+
+                await sendEmail(user.email, subject, message);
+            }
 
             res.redirect("/purchases?success=Game purchased successfully")
         } catch (error) {
@@ -163,16 +173,8 @@ class Controller {
 
     static async addGameForm(req, res) {
         try {
-            const userDev = await User.findAll({
-                attributes: ['id', 'userName'],
-                where: {
-                    role: {
-                        [Op.eq]: 'Developer'
-                    }
-                }
-            })
-
-            res.render('addGameForm', { userDev })
+            const { err } = req.query
+            res.render('addGameForm', { err })
         } catch (error) {
             console.log(error);
 
@@ -188,9 +190,15 @@ class Controller {
             await Game.create({ gameName, UserId, imageUrl })
             res.redirect('/games')
         } catch (error) {
-            console.log(error);
+            if (error.name === 'SequelizeValidationError') {
+                const err = error.errors.map((el) => {
+                    return el.message
+                })
 
-            res.send(error)
+                res.redirect(`/games/add?err=${err}`)
+            } else {
+                res.send(error)
+            }
         }
     }
 
@@ -221,7 +229,8 @@ class Controller {
 
     static async addCategoryForm(req, res) {
         try {
-            res.render('addCategories')
+            const { err } = req.query
+            res.render('addCategories', { err })
         } catch (error) {
             console.log(error);
 
@@ -236,9 +245,15 @@ class Controller {
             await Category.create({ categoryName })
             res.redirect("/categories")
         } catch (error) {
-            console.log(error);
+            if (error.name === 'SequelizeValidationError') {
+                const err = error.errors.map((el) => {
+                    return el.message
+                })
 
-            res.send(error)
+                res.redirect(`/categories/add?err=${err}`)
+            } else {
+                res.send(error)
+            }
         }
     }
     static async editGameForm(req, res) {
@@ -271,7 +286,6 @@ class Controller {
         try {
             const { id } = req.params
             const { gameName, imageUrl } = req.body
-
 
             await Game.update(
                 {

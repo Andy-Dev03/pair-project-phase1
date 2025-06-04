@@ -30,6 +30,11 @@ router.use(function (req, res, next) {
 
 router.get("/logout", UserController.logout)//V
 
+// Profile
+router.get("/profile", ProfileController.showProfile)
+router.get("/profile/edit", ProfileController.editProfileForm)
+router.post("/profile/edit", ProfileController.updateProfile)
+
 // Purchases
 router.get("/store", Controller.store)//V
 router.get("/store/:id/buy", Controller.buyGame)//V

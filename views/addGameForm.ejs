@@ -11,6 +11,16 @@
     <hr>
     <button><a href="/">Back</a></button>
     <hr>
+    <% if (err) { %>
+         <% err.split(',').forEach(el => { %>
+            <%= console.log(el);
+             %>
+          <div style="color: red;">
+            <b><%= el %></b>
+          </div>
+         <% }) %>
+            <br>
+        <% } %>
     <form action="/games/add"  method="post">
         <label for="gameName">Game Names:</label><br>
         <input type="gameName" name="gameName" id="gameName"><br><br>
