@@ -3,27 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Game</title>
+    <title>Edit Game</title>
 </head>
 <body>
     <div style="text-align: center;">
-    <h1>Add Game</h1>
+    <h1>Edit Game</h1>
 
-    <form action="/games/add"  method="post">
+    <form action="/games/<%= one.id %>/edit"  method="post">
         <label for="gameName">Game Names:</label><br>
-        <input type="gameName" name="gameName" id="gameName"><br><br>
+        <input type="gameName" name="gameName" id="gameName" value="<%= one.gameName %>"><br><br>
 
         <label for="imageUrl">Put your Game Image:</label><br>
-        <input type="imageUrl" name="imageUrl" id="imageUrl"><br><br>
+        <input type="imageUrl" name="imageUrl" id="imageUrl" value="<%= one.imageUrl %>"><br><br>
 
         <label for="UserId"></label>
         <select name="UserId" id="UserId">
-            <option value="" disabled selected>Choose your dev name</option>
             <% userDev.forEach(u=> { %>
-            <option value="<%= u.id %>"><%= u.userName %></option>
+            <option value="<%= u.id %>" <%= u.id === one.UserId? 'selected' : ''%>><%= u.userName %></option>
             <% }) %>
         </select><br><br>
-        <button type="submit">Submit you deploy Game</button>
+        <button type="submit">Edit the Game</button>
     </form>
     </div>
 </body>
