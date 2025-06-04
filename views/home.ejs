@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="margin: 0;">
+    <div style="text-align: center;">
+
+        <%- include('layout') %>
+
+        <% if (error) { %>
+            <p style="color: red;"><%= error %></p>
+        <% } %>
+        
+        <h1>Welcome to Gaming Store! 🎮</h1>
+        <p>Discover and buy the best games from top developers</p>
+        
+        <button><a href="/games/add">Add Games</a></button>
+        
+    </div>
+</body>
+</html>

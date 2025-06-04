@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const { getTime } = require('../helpers/helper');
 module.exports = (sequelize, DataTypes) => {
   class Game extends Model {
     /**
@@ -25,11 +26,16 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "GameId",
       })
     }
+
+    get time () {
+      return getTime(this.createdAt)
+    }
   }
   Game.init({
     gameName: DataTypes.STRING,
     UserId: DataTypes.INTEGER,
-    imageUrl: DataTypes.STRING
+    imageUrl: DataTypes.STRING,
+    createdAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Game',
