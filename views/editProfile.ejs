@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Edit Profile</title>
+</head>
+
+<body style="font-family: Arial, sans-serif; padding: 10px;">
+    <div style="margin: auto; max-width: 400px;">
+
+        <h2 style="color:#333;">Edit Profile</h2>
+        
+        <form action="/profile/edit" method="post" style="width: 100%;;">
+            <label for="firstName">First Name</label><br>
+            <input type="text" id="firstName" name="firstName" value="<%= user.Profile.firstName %>"
+            style="width:100%;"><br><br>
+            
+            <label for="lastName">Last Name</label><br>
+            <input type="text" id="lastName" name="lastName" value="<%= user.Profile.lastName %>"
+            style="width:100%;"><br><br>
+            
+            <label for="location">Location</label><br>
+            <input type="text" id="location" name="location" value="<%= user.Profile.location %>"
+            style="width:100%;"><br><br>
+            
+            <label for="bio">Bio</label><br>
+            <textarea id="bio" name="bio" style="width:100%; height:80px;"><%= user.Profile.bio %></textarea><br><br>
+            
+            <button type="submit" style="padding: 8px 12px;">Save Changes</button>
+            <a href="/profile" style="margin-left: 10px;">Cancel</a>
+        </form>
+    </div>    
+</body>
+    
+</html>

@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
 </head>
-<body>
-    <div>
-        <div>
-            <div>
-                <div>
-                    <h3>Login</h3>
-                </div>
-                
-                <div>
-                    <% if (error) { %>
-                        <p style="color: red;"><%= error %></p>
-                    <% } %>
 
-                    <form action="/login" method="post">
-                        <div>
-                            <label for="email">Email</label>
-                            <input type="email" name="email" id="email">
-                        </div>
-                        <div>
-                            <label for="password">Password</label>
-                            <input type="password" name="password" id="password">
-                        </div>
+<body style="font-family: sans-serif; background: #f0f0f0; padding: 40px;">
 
-                        <button type="submit">Login</button>
-                    </form>
+    <div style="max-width: 350px; margin: auto; background: white; padding: 20px; border-radius: 5px;">
+        <h3 style="text-align: center;">Login</h3>
 
-                    <div>
-                        <p>Don't have account? <a href="/register">Register here</a></p>
+        <% if (error) { %>
+            <p style="color: red; text-align: center;">
+                <%= error %>
+            </p>
+            <% } %>
+
+                <form action="/login" method="post">
+                    <div style="margin-bottom: 10px;">
+                        <label for="email">Email</label><br />
+                        <input type="email" name="email" id="email" style="width: 100%;" />
                     </div>
-                </div>
-            </div>
-        </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label for="password">Password</label><br />
+                        <input type="password" name="password" id="password" style="width: 100%;" />
+                    </div>
+
+                    <button type="submit"
+                        style="width: 100%; background: black; color: white; padding: 8px;">Login</button>
+                </form>
+
+                <p style="text-align: center; margin-top: 15px;">
+                    Don't have an account? <a href="/register">Register here</a>
+                </p>
     </div>
-    
+
 </body>
+
 </html>

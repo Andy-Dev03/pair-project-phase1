@@ -51,11 +51,11 @@
                                     <p><%= c.categoryName %></p>
                                 <% }) %>
                             </td>
-                            <td>
                             <% if (role === 'Buyer') { %>
+                            <td>
                                 <button><a href="/store/<%= g.id %>/buy">Buy Game</a></button>
-                            <% } %>
                             </td>
+                            <% } %>
                         </tr>
                     <% }) %>
                 </table>

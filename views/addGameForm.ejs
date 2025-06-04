@@ -27,6 +27,14 @@
 
         <label for="imageUrl">Put your Game Image:</label><br>
         <input type="imageUrl" name="imageUrl" id="imageUrl"><br><br>
+
+        <label for="CategoryId">Category</label><br>
+        <select name="CategoryId" id="CategoryId">
+            <option value="" disabled selected>Choose Category</option>
+            <% categories.forEach(c => { %>
+             <option value="<%= c.id %>"><%= c.categoryName %></option>
+            <% }) %>
+        </select><br><br>
         
         <button type="submit">Submit you deploy Game</button>
     </form>

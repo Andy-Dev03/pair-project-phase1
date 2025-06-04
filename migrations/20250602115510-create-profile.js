@@ -21,12 +21,6 @@ module.exports = {
       location: {
         type: Sequelize.STRING
       },
-      wallet: {
-        type: Sequelize.INTEGER
-      },
-      location: {
-        type: Sequelize.STRING
-      },
       UserId: {
         type: Sequelize.INTEGER,
         allowNull: false,
