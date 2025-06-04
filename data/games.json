@@ -1,14 +1,17 @@
 [
   {
     "gameName": "PUBG",
+    "imageUrl" : "https://images.hdqwalls.com/wallpapers/pubg-mobile-z1.jpg",
     "UserId": 1
   },
   {
     "gameName" : "Valorant",
+    "imageUrl" : "https://images.wallpapersden.com/image/download/valorant-logo-art_bGZubWuUmZqaraWkpJRobWllrWdpZWU.jpg",
     "UserId": 2
   },
   {
     "gameName" : "Mobile Legend",
+    "imageUrl" : "https://wallpaperaccess.com/full/3518004.jpg",
     "UserId": 3
   }
 ]

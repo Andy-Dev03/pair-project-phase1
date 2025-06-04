@@ -11,11 +11,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+       Game.belongsTo(models.User, {
+        foreignKey: "UserId",
+      })
+
+      Game.belongsToMany(models.Category, {
+        through: models.GameCategory,
+        foreignKey: "GameId",
+      })
+
+      Game.belongsToMany(models.User, {
+        through: models.Purchase,
+        foreignKey: "GameId",
+      })
     }
   }
   Game.init({
     gameName: DataTypes.STRING,
-    UserId: DataTypes.INTEGER
+    UserId: DataTypes.INTEGER,
+    imageUrl: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Game',

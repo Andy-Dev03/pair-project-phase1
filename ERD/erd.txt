@@ -8,8 +8,8 @@ TABLE "Users" {
 
 TABLE "Profiles" {
   id SERIAL [PRIMARY KEY]
-  namaDepan VARCHAR
-  namaBelakang VARCHAR
+  firstName VARCHAR
+  lastName VARCHAR
   bio TEXT
   location VARCHAR
   wallet INTEGER
@@ -19,6 +19,7 @@ TABLE "Profiles" {
 TABLE "Games" {
   id SERIAL [PRIMARY KEY]
   gameName VARCHAR
+  imageUrl VARCHAR
   UserId INTEGER
 }
 

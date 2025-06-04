@@ -12,8 +12,12 @@
                 <div>
                     <h3>Login</h3>
                 </div>
-
+                
                 <div>
+                    <% if (error) { %>
+                        <p style="color: red;"><%= error %></p>
+                    <% } %>
+
                     <form action="/login" method="post">
                         <div>
                             <label for="email">Email</label>
