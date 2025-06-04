@@ -12,11 +12,21 @@
         <hr>
         <button><a href="/">Back</a></button>
         <hr>
+        <% if (err) { %>
+         <% err.split(',').forEach(el => { %>
+            <%= console.log(el);
+             %>
+          <div style="color: red;">
+            <b><%= el %></b>
+          </div>
+         <% }) %>
+            <br>
+        <% } %>
         <form action="/categories/add" method="post">
             <label for="categoryName">Category Name</label><br>
             <input type="text" name="categoryName" id="categoryName"><br><br>
 
-            <button type="submit">Submit</button>
+            <button type="submit"></button>
         </form>
     </div>
 </body>
