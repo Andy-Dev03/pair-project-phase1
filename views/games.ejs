@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="text-align: center;">
+        <div>
+            <h2><%= role === 'Developer' ? 'My Games' : 'All Games' %></h2>
+            <hr>
+            <% if (role === 'Developer') { %>
+                <button><a href="/games/add">Add New Game</a></button>
+            <% } %>
+            <hr>
+        </div>
+        
+        <div>
+            <% if (games.length === 0) { %>
+                <div>
+                    <h3>No games found</h3>
+                    <% if (role === 'Developer') { %>
+                        <p>Start by <a href="/games/add">adding your first game</a>!</p>
+                    <% } else { %>
+                        <p>No games available at the moment.</p>
+                    <% } %>
+                </div>
+            <% } else { %>
+                <table border="8" style="text-align: center; margin:auto">
+                    <tr>
+                        <th>Image</th>
+                        <th>Game Name & Dev</th>
+                        <th>Category</th>
+                        <% if (role === 'Developer') { %>
+                            <th>Action</th>
+                        <% } %>
+                    </tr>
+                    <% games.forEach(g => { %>
+                     <tr>
+                        <td><img src="<%= g.imageUrl %>" alt="<%= g.gameName %>" width="500px"></td>
+                        <td><%= g.gameName %> By <span style="color: rgb(0, 76, 255); font-weight: bold;"><%= g.User.userName %></span></td>
+                        <td>
+                            <% g.Categories.forEach(c => { %>
+                                <p><%= c.categoryName %></p>
+                            <% }) %>
+                        </td>
+                        <% if (role === 'Developer') { %>
+                            <td>
+                                <button><a href="/games/<%= g.id %>/edit">Edit</a></button>
+                                <button><a href="/games/<%= g.id %>/delete">Delete</a></button>
+                            </td>
+                        <% } %>
+                     </tr>
+                    <% }) %>
+                </table>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -3,22 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css" />
     <title>Document</title>
 </head>
 <body style="margin: 0;">
+    <%- include('nav') %>
     <div style="text-align: center;">
-
-        <%- include('layout') %>
-
-        <% if (error) { %>
-            <p style="color: red;"><%= error %></p>
-        <% } %>
-        
-        <h1>Welcome to Gaming Store! 🎮</h1>
-        <p>Discover and buy the best games from top developers</p>
-        
-        <button><a href="/games/add">Add Games</a></button>
-        
+        <div>
+            <% if (error) { %>
+                <p style="color: red;"><%= error %></p>
+            <% } %>
+            
+            <div>
+                <h1>Welcome to Gaming Platform</h1>
+                <p>Discover and purchase amazing games from talented developers.</p>
+                
+                <% if (userId !== 'undefined' && userId) { %>
+                    <p>Welcome back! Role: <strong><%= role %></strong></p>
+                    <button><a href="/store">Browse Store</a></button>
+                    <% if (role === 'Developer') { %>
+                    <button><a href="/games/add">Add New Game</a></button>
+                    <% } %>
+                <% } else { %>
+                    <button><a href="/register">Get Started</a></button>
+                    <button><a href="/login">Login</a></button>
+                <% } %>
+            </div>
+        </div>
     </div>
 </body>
 </html>

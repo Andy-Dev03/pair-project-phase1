@@ -7,33 +7,60 @@
 </head>
 <body>
     <div style="text-align: center;">
-        <h1>STORE OF ALL GAME</h1>
-        <table border="8" style="margin: auto; text-align: center;">
-            <tr>
-                <th>No.</th>
-                <th>Image</th>
-                <th>Game name</th>
-                <th>Category</th>
-                <th>Created At</th>
-                <th>Action</th>
-            </tr>
-            <% games.forEach((g, idx) => { %>
-                <% g.Categories.forEach(c => { %>
+        <div>
+            <h2>Game Store</h2>
+            <p>Browse and purchase games</p>
+            <hr>
+            <button><a href="/">Back</a></button>
+            <hr>
+        </div>
+        <hr>
+        <form action="/store" method="get">
+            <label for="search">Game</label>
+            <input type="text" name="search">
+            <button type="submit">Search</button>
+        </form>
+        <hr>
+
+        <% if (error) { %>
+            <p style="color: red;"><%= error %></p>
+        <% } %>
+        
+        <div>
+            <% if (games.length === 0) { %>
+                <div style="text-align: center;">
+                    <h3>No games available</h3>
+                    <p>Check back later for new games!</p>
+                </div>
+            <% } else { %>
+                <table border="8" style="text-align: center; margin:auto">
                     <tr>
-                        <td><%= idx + 1 %></td>
-                        <td><img src="<%= g.imageUrl %>" alt="" width="500px"></td>
-                        <td><%= g.gameName %></td>
-                        <td><%= c.categoryName %></td>
-                        <td><%= g.time%></td>
-                        <td>
-                            <button><a href="/games/<%= g.id %>/edit">Edit Game</a></button>
-                            <button><a href="/games/<%= g.id %>/delete">Delete</a></button>
-                            <button><a href="/store/<%= g.id %>/buy">Buy Game</a></button>
-                        </td>
+                        <th>Image</th>
+                        <th>Game Name & Dev</th>
+                        <th>Categories</th>
+                        <% if (role === 'Buyer') { %>
+                            <th>Action</th>
+                        <% } %>
                     </tr>
-                <% }) %>
-            <% }) %>
-        </table>
+                    <% games.forEach(g => { %>
+                        <tr>
+                            <td><img src="<%= g.imageUrl %>" alt="<%= g.gameName %>" width="500px"></td>
+                            <td><%= g.gameName %> by <span style="color: rgb(0, 76, 255); font-weight: bold;"><%= g.User.userName %></span></td>
+                            <td>
+                                <% g.Categories.forEach(c => { %>
+                                    <p><%= c.categoryName %></p>
+                                <% }) %>
+                            </td>
+                            <td>
+                            <% if (role === 'Buyer') { %>
+                                <button><a href="/store/<%= g.id %>/buy">Buy Game</a></button>
+                            <% } %>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </table>
+            <% } %>
+        </div>
     </div>
 </body>
 </html>
