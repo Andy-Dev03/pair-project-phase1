@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="text-align: center;">
+        <div >
+            <h2>My Profile</h2>
+        
+            <% if (success) { %>
+                <p><%= success %></p>
+            <% } %>
+            <% if (error) { %>
+                <p><%= error %></p>
+            <% } %>
+
+                <div>
+                    <div>
+                        <h3>Profile Information</h3>
+                        <hr>
+                        <button><a href="/profile/edit">Edit Profile</a></button>
+                        <hr>
+
+                        <p><strong>Username:</strong> <%= user.userName %></p>
+                        <p><strong>Email:</strong> <%= user.email %></p>
+                        <p><strong>Role:</strong> <%= user.role %></p>
+                        
+                        <% if (user.Profile) { %>
+                            <p><strong>Name:</strong> 
+                                <% if (user.Profile.firstName || user.Profile.lastName) { %>
+                                    <%= user.Profile.firstName %> <%= user.Profile.lastName %>
+                                <% } else { %>
+                                    Not set
+                                <% } %>
+                            </p>
+                            <p><strong>Location:</strong> <%= user.Profile.location === '' ? 'No set' : user.Profile.location%></p>
+                           <p><strong>Bio:</strong> <%= user.Profile.bio === '' ? 'No bio added' : user.Profile.bio %></p>
+                        <% } else { %>
+                            <p><strong>Name:</strong> Not set</p>
+                            <p><strong>Location:</strong> Not set</p>
+                            <p><strong>Bio:</strong> No bio added</p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

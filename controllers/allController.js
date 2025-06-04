@@ -120,7 +120,7 @@ class Controller {
                 order: [["purchaseDate", "DESC"]],
             })
             // res.send(purchases)
-            res.render("purchases", { purchases, success, error })
+            res.render("purchases", { purchases, success })
         } catch (error) {
             console.log(error);
 
@@ -133,6 +133,7 @@ class Controller {
             const userId = req.session.userId
             const role = req.session.role
 
+            const { msg } = req.query
             let games;
             if (role === "Developer") {
                 games = await Game.findAll({
@@ -163,7 +164,7 @@ class Controller {
                 })
             }
 
-            res.render("games", { games, role })
+            res.render("games", { games, role, msg })
         } catch (error) {
             console.log(error);
 
@@ -174,7 +175,9 @@ class Controller {
     static async addGameForm(req, res) {
         try {
             const { err } = req.query
-            res.render('addGameForm', { err })
+            const categories = await Category.findAll()
+
+            res.render('addGameForm', { categories, err })
         } catch (error) {
             console.log(error);
 
@@ -184,10 +187,26 @@ class Controller {
 
     static async saveGame(req, res) {
         try {
-            const { gameName, imageUrl } = req.body
+            const { gameName, imageUrl, CategoryId } = req.body
             const UserId = req.session.userId
 
-            await Game.create({ gameName, UserId, imageUrl })
+            const newGame = await Game.create({ gameName, UserId, imageUrl })
+
+            if (CategoryId) {
+                let categoryList = CategoryId
+
+                if (typeof CategoryId === "string") {
+                    categoryList = [CategoryId]
+                }
+
+                for (let i = 0; i < categoryList.length; i++) {
+                    await GameCategory.create({
+                        GameId: newGame.id,
+                        CategoryId: Number.parseInt(categoryList[i]),
+                    })
+                }
+            }
+
             res.redirect('/games')
         } catch (error) {
             if (error.name === 'SequelizeValidationError') {
@@ -256,25 +275,33 @@ class Controller {
             }
         }
     }
+
     static async editGameForm(req, res) {
         try {
             const { id } = req.params
+            const { err } = req.query
 
-            const one = await Game.findOne({
-                where: {
-                    id: +id
-                },
-                include: {
-                    model: User,
-                    where: {
-                        role: {
-                            [Op.eq]: 'Developer'
-                        }
-                    }
-                }
-            });
+            const categories = await Category.findAll()
 
-            res.render('editGameForm', { one })
+            const game = await Game.findOne({
+                where: { id: +id },
+                include: [
+                    {
+                        model: User,
+                        where: {
+                            role: {
+                                [Op.eq]: "Developer",
+                            },
+                        },
+                    },
+                    {
+                        model: Category,
+                        through: { attributes: [] },
+                    },
+                ],
+            })
+            // res.send(game)
+            res.render("editGameForm", { game, categories, err })
         } catch (error) {
             console.log(error);
 
@@ -282,28 +309,53 @@ class Controller {
         }
     }
 
-    static async updateGame(req, res) {
+    static async savedEdit(req, res) {
+        const { id } = req.params
         try {
-            const { id } = req.params
-            const { gameName, imageUrl } = req.body
+            const { gameName, imageUrl, CategoryId } = req.body
 
             await Game.update(
                 {
                     gameName,
-                    imageUrl
+                    imageUrl,
                 },
                 {
                     where: {
-                        id: +id
-                    }
-                }
+                        id: +id,
+                    },
+                },
             )
+
+            await GameCategory.destroy({
+                where: { GameId: +id },
+            })
+
+            if (CategoryId) {
+                let categoryList = CategoryId
+
+                if (typeof CategoryId === "string") {
+                    categoryList = [CategoryId]
+                }
+
+                for (let i = 0; i < categoryList.length; i++) {
+                    await GameCategory.create({
+                        GameId: +id,
+                        CategoryId: Number.parseInt(categoryList[i]),
+                    })
+                }
+            }
 
             res.redirect('/games')
         } catch (error) {
-            console.log(error);
+            if (error.name === 'SequelizeValidationError') {
+                const err = error.errors.map((el) => {
+                    return el.message
+                })
 
-            res.send(error)
+                res.redirect(`/games/${id}/edit?err=${err}`)
+            } else {
+                res.send(error)
+            }
         }
     }
 
@@ -311,19 +363,79 @@ class Controller {
         try {
             const { id } = req.params
 
+            const deleted = await Game.findByPk(+id)
+
+            const msg = `Success deleted ${deleted.gameName}`
+            // res.send(deleted)
             await Game.destroy({
                 where: {
                     id: +id
                 }
             })
 
-            res.redirect('/games')
+            res.redirect(`/games?msg=${msg}`)
         } catch (error) {
             console.log(error);
 
             res.send(error)
         }
     }
+
+    static async showProfile(req, res) {
+        try {
+            const userId = req.session.userId
+            const { success, error } = req.query
+
+            const user = await User.findByPk(userId, {
+                include: [Profile],
+            })
+
+            res.render("profile", { user, success, error })
+        } catch (error) {
+            console.log(error)
+            res.send(error)
+        }
+    }
+
+    static async editProfile(req, res) {
+        try {
+            const userId = req.session.userId
+
+            const user = await User.findByPk(userId, {
+                include: [Profile],
+            })
+
+            res.render("editProfile", { user })
+        } catch (error) {
+            console.log(error)
+            res.send(error)
+        }
+    }
+
+    static async savedProfile(req, res) {
+        try {
+            const userId = req.session.userId
+            const { firstName, lastName, bio, location } = req.body
+
+            await Profile.update(
+                {
+                    firstName,
+                    lastName,
+                    bio,
+                    location,
+                },
+                {
+                    where: { UserId: userId },
+                },
+            )
+
+            res.redirect("/profile?success=Profile updated!")
+        } catch (error) {
+            console.log(error)
+            res.redirect("/profile?error=Update failed")
+        }
+    }
+
 }
 
 module.exports = Controller

@@ -16,6 +16,9 @@
             <hr>
         </div>
         
+        <% if (msg) { %>
+            <p style="color: red;"><%= msg %></p>
+        <% } %>
         <div>
             <% if (games.length === 0) { %>
                 <div>

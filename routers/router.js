@@ -31,9 +31,9 @@ router.use(function (req, res, next) {
 router.get("/logout", UserController.logout)//V
 
 // Profile
-router.get("/profile", ProfileController.showProfile)
-router.get("/profile/edit", ProfileController.editProfileForm)
-router.post("/profile/edit", ProfileController.updateProfile)
+router.get("/profile", Controller.showProfile)
+router.get("/profile/edit", Controller.editProfile)
+router.post("/profile/edit", Controller.savedProfile)
 
 // Purchases
 router.get("/store", Controller.store)//V
@@ -46,13 +46,13 @@ router.get("/games/add", isDev, Controller.addGameForm) //V
 router.post("/games/add", isDev, Controller.saveGame) //V
 
 //Categories
-router.get("/categories", Controller.categories) //V
-router.get("/categories/add", Controller.addCategoryForm) //V
-router.post("/categories/add", Controller.saveCategory) //V
+router.get("/categories", isDev, Controller.categories) //V
+router.get("/categories/add", isDev, Controller.addCategoryForm) //V
+router.post("/categories/add", isDev, Controller.saveCategory) //V
 
 //Params
 router.get("/games/:id/edit", isDev, Controller.editGameForm) //V
-router.post("/games/:id/edit", isDev, Controller.updateGame) //V
+router.post("/games/:id/edit", isDev, Controller.savedEdit) //V
 router.get("/games/:id/delete", isDev, Controller.deleteGame) //V
 
 module.exports = router
