@@ -175,7 +175,7 @@ class Controller {
     static async addGameForm(req, res) {
         try {
             const { err } = req.query
-            const categories = await Category.findAll()
+            const categories = await Category.getAllCategory()
 
             res.render('addGameForm', { categories, err })
         } catch (error) {

@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "CategoryId",
       })
     }
+
+    static getAllCategory() {
+      return Category.findAll()
+    }
   }
   Category.init({
     categoryName: {
