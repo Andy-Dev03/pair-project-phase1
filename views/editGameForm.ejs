@@ -16,12 +16,6 @@
         <label for="imageUrl">Put your Game Image:</label><br>
         <input type="imageUrl" name="imageUrl" id="imageUrl" value="<%= one.imageUrl %>"><br><br>
 
-        <label for="UserId"></label>
-        <select name="UserId" id="UserId">
-            <% userDev.forEach(u=> { %>
-            <option value="<%= u.id %>" <%= u.id === one.UserId? 'selected' : ''%>><%= u.userName %></option>
-            <% }) %>
-        </select><br><br>
         <button type="submit">Edit the Game</button>
     </form>
     </div>

@@ -8,21 +8,16 @@
 <body>
     <div style="text-align: center;">
     <h1>Add Game</h1>
-
+    <hr>
+    <button><a href="/">Back</a></button>
+    <hr>
     <form action="/games/add"  method="post">
         <label for="gameName">Game Names:</label><br>
         <input type="gameName" name="gameName" id="gameName"><br><br>
 
         <label for="imageUrl">Put your Game Image:</label><br>
         <input type="imageUrl" name="imageUrl" id="imageUrl"><br><br>
-
-        <label for="UserId"></label>
-        <select name="UserId" id="UserId">
-            <option value="" disabled selected>Choose your dev name</option>
-            <% userDev.forEach(u=> { %>
-            <option value="<%= u.id %>"><%= u.userName %></option>
-            <% }) %>
-        </select><br><br>
+        
         <button type="submit">Submit you deploy Game</button>
     </form>
     </div>

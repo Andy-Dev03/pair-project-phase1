@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const { getDate } = require('../helpers/helper');
 module.exports = (sequelize, DataTypes) => {
   class Purchase extends Model {
     /**
@@ -18,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
       Purchase.belongsTo(models.Game, {
         foreignKey: "GameId",
       })
+    }
+    get date () {
+      return getDate(this.purchaseDate)
     }
   }
   Purchase.init({

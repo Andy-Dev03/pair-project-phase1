@@ -1,5 +1,5 @@
-const getTime = (value) => {
+const getDate = (value) => {
     return value.toLocaleDateString('id-ID')
 }
 
-module.exports = {getTime}
+module.exports = {getDate}

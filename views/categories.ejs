@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="text-align: center;">
+        <div>
+            <h1>Game Categories</h1>
+
+            <hr>
+            <button><a href="/categories/add">Add Category</a></button>
+            <hr>
+        </div>
+        
+        <div>
+            <% if (categories.length === 0) { %>
+                <div>
+                    <h2>No categories yet</h2>
+                    <p><a href="/categories/add">Add the first category</a> to get started!</p>
+                </div>
+            <% } else { %>
+                <% categories.forEach(c => { %>
+                 <div>
+                    <div>
+                        <h3><%= c.categoryName %></h3>
+                        <p><strong><%= c.Games.length %></strong> games in this category</p>
+                    </div>
+                    <div>
+                        <h3>Games:</h3>
+                        <% if (c.Games.length === 0) { %>
+                            <p>No games in this category yet.</p>
+                        <% } else { %>
+                            <table border="8" style="margin: auto;">
+                                <tr>
+                                    <th>Game</th>
+                                    <th>Dev</th>
+                                </tr>
+                                <% c.Games.forEach(g => { %>
+                                 <tr>
+                                    <td><%= g.gameName %></td>
+                                    <td><%= g.User.userName %></td>
+                                 </tr>
+                                <% }) %>
+                            </table>
+                        <% } %>
+                    </div>
+                 </div>
+                 <hr>
+                <% }) %>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

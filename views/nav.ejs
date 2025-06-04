@@ -1,0 +1,17 @@
+<nav style="background-color: black; padding: 30px;">
+    <div style="display: flex; justify-content: space-between;">
+        <a href="/" style="text-decoration: none; color: white; font-weight: bold; font-size: 20px;">Gaming Platform</a>
+        <div>
+            <% if (userId !== 'undefined' && userId) { %>
+                <button><a href="/store">Store</a></button>
+                <button><a href="/games">Games</a></button>
+                <button><a href="/purchases">My Purchases</a></button>
+                <button><a href="/categories">Categories</a></button>
+                <button><a href="/logout">Logout</a></button>
+            <% } else { %>
+                <button><a href="/login">Login</a></button>
+                <button><a href="/register">Register</a></button>
+            <% } %>
+        </div>
+    </div>
+</nav>

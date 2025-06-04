@@ -17,7 +17,7 @@ router.get("/register", UserController.registerForm)//V
 router.post("/register", UserController.savedRegister)//V
 router.get("/login", UserController.loginForm)//V
 router.post("/login", UserController.savedLogin)//V
-router.get("/", Controller.home)
+router.get("/", Controller.home)//V
 
 router.use(function (req, res, next) {
     if(!req.session.userId) {
@@ -28,23 +28,22 @@ router.use(function (req, res, next) {
     }
 });
 
-// Purchases
-router.get("/store", Controller.store)//V
-router.get("/store/:id/buy", Controller.buyGame)
-router.get("/purchases", Controller.purchases)
-
-//Games
-router.get("/games", Controller.games)
-
 router.get("/logout", UserController.logout)//V
 
+// Purchases
+router.get("/store", Controller.store)//V
+router.get("/store/:id/buy", Controller.buyGame)//V
+router.get("/purchases", Controller.purchases)//V
+
+//Games
+router.get("/games", Controller.games) //V
 router.get("/games/add", isDev, Controller.addGameForm) //V
 router.post("/games/add", isDev, Controller.saveGame) //V
 
 //Categories
-router.get("/categories", Controller.categories)
-router.get("/categories/add", Controller.addCategoryForm)
-router.post("/categories/add", Controller.saveCategory)
+router.get("/categories", Controller.categories) //V
+router.get("/categories/add", Controller.addCategoryForm) //V
+router.post("/categories/add", Controller.saveCategory) //V
 
 //Params
 router.get("/games/:id/edit", isDev, Controller.editGameForm) //V
