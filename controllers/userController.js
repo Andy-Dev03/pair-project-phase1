@@ -1,39 +1,42 @@
 const { Op } = require("sequelize");
 const { User } = require('../models')
-const bcrypt = require('bcryptjs') ;
+const bcrypt = require('bcryptjs');
 
 class UserController {
     static async registerForm(req, res) {
         try {
             const role = ['Developer', 'Buyer']
-            
-            res.render('registerForm', {role})
+
+            res.render('registerForm', { role })
         } catch (error) {
             console.log(error);
-            
+
             res.send(error)
         }
     }
 
     static async savedRegister(req, res) {
         try {
-            const {userName, email, password, role} = req.body
+            const { userName, email, password, role } = req.body
 
-            await User.create({userName, email, password, role})
+            await User.create({ userName, email, password, role })
             res.redirect('/login')
         } catch (error) {
             console.log(error);
-            
+
             res.send(error)
         }
     }
 
     static async loginForm(req, res) {
         try {
-            res.render('loginForm')
+
+            const { error } = req.query
+
+            res.render('loginForm', { error })
         } catch (error) {
             console.log(error);
-            
+
             res.send(error)
         }
     }
@@ -41,21 +44,36 @@ class UserController {
     static async savedLogin(req, res) {
         try {
             const { email, password } = req.body
-            
+
+            const error = "Invalid email or password";
+            const user = await User.findOne({ where: { email } });
+            if (!user) return res.redirect(`/login?error=${error}`);
+
+            const isValidPassword = await bcrypt.compare(password, user.password);
+            if (!isValidPassword) return res.redirect(`/login?error=${error}`);
+
+            req.session.userId = user.id
+            req.session.role = user.role
+
             res.redirect('/')
         } catch (error) {
             console.log(error);
-            
+
             res.send(error)
         }
     }
 
-    static async X(req, res) {
+    static async logout(req, res) {
         try {
-            res.send('X')
+            req.session.destroy((err) => {
+                if (err) {
+                    console.log(err)
+                    return res.send(err)
+                }
+                res.redirect("/login")
+            })
         } catch (error) {
-            console.log(error);
-            
+            console.log(error)
             res.send(error)
         }
     }

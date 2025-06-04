@@ -12,12 +12,12 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   const conjungsions = require('../data/conjungsions.json')
-   conjungsions.forEach(c => {
-    delete c.id
-    c.createdAt = c.updatedAt = new Date()
+   const gameCategories = require('../data/gameCategories.json')
+   gameCategories.forEach(d => {
+    delete d.id
+    d.createdAt = d.updatedAt = new Date()
    });
-   await queryInterface.bulkInsert('Conjungsions', conjungsions, {})
+   await queryInterface.bulkInsert('GameCategories', gameCategories, {})
   },
 
   async down (queryInterface, Sequelize) {
@@ -27,7 +27,7 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('Conjungsions', null, {
+    await queryInterface.bulkDelete('GameCategories', null, {
       restartIdentity: true,
       truncate: true,
       cascade: true
