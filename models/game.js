@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-       Game.belongsTo(models.User, {
+      Game.belongsTo(models.User, {
         foreignKey: "UserId",
       })
 
@@ -25,6 +25,31 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "GameId",
       })
     }
+    static async sendNotification(toEmail, subject, text) {
+      try {
+        const nodemailer = require('nodemailer')
+
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: process.env.EMAIL_USER,   
+            pass: process.env.EMAIL_PASS 
+          }
+        });
+
+        const options = {
+          from: process.env.EMAIL_USER,
+          to: toEmail,
+          subject: subject,
+          text: text
+        };
+        
+        await transporter.sendMail(options);
+
+      } catch (error) {
+        console.log('Tidak terkirim', error);
+      }
+    }
   }
   Game.init({
     gameName: {
@@ -33,11 +58,11 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: {
           args: true,
-          msg : 'Game Name is required'
+          msg: 'Game Name is required'
         },
         notEmpty: {
           args: true,
-          msg : 'Game Name is required'
+          msg: 'Game Name is required'
         }
       }
     },
@@ -47,11 +72,11 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: {
           args: true,
-          msg : 'User is required'
+          msg: 'User is required'
         },
         notEmpty: {
           args: true,
-          msg : 'User is required'
+          msg: 'User is required'
         }
       }
     },
@@ -61,11 +86,11 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: {
           args: true,
-          msg : 'Image Url is required'
+          msg: 'Image Url is required'
         },
         notEmpty: {
           args: true,
-          msg : 'Image Url is required'
+          msg: 'Image Url is required'
         }
       }
     }

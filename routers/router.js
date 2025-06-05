@@ -5,7 +5,7 @@ const router = express.Router()
 
 const isDev = function (req, res, next) {
     if(req.session.userId && req.session.role !== 'Developer') {
-        const error = `You not a developer u can't add game (Just can buy)`
+        const error = `You not a developer`
         res.redirect(`/?error=${error}`)
     } else {
         next();

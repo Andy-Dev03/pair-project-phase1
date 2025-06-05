@@ -1,6 +1,5 @@
 const { Op } = require("sequelize")
 const { User, Purchase, Profile, Game, Category, GameCategory } = require('../models')
-const { sendEmail } = require("../helpers/helper")
 
 class Controller {
     static async home(req, res) {
@@ -82,9 +81,9 @@ class Controller {
 
             if (user && game) {
                 const subject = `Thankyou for buy the game: ${game.gameName}`;
-                const message = `Hi ${user.userName},\n\nYou succes buy "${game.gameName}". Enjoyy!`;
+                const text = `Hi ${user.userName},\n\nYou succes buy "${game.gameName}". Enjoyy!`;
 
-                await sendEmail(user.email, subject, message);
+                await Game.sendNotification(user.email, subject, text);
             }
 
             res.redirect("/purchases?success=Game purchased successfully")
@@ -190,22 +189,15 @@ class Controller {
             const { gameName, imageUrl, CategoryId } = req.body
             const UserId = req.session.userId
 
-            const newGame = await Game.create({ gameName, UserId, imageUrl })
+            const newGame = await Game.create({ gameName, UserId, imageUrl },
+                { returning: true }
+            )
+            // res.send(newGame)
 
-            if (CategoryId) {
-                let categoryList = CategoryId
-
-                if (typeof CategoryId === "string") {
-                    categoryList = [CategoryId]
-                }
-
-                for (let i = 0; i < categoryList.length; i++) {
-                    await GameCategory.create({
-                        GameId: newGame.id,
-                        CategoryId: Number.parseInt(categoryList[i]),
-                    })
-                }
-            }
+            await GameCategory.create({
+                GameId: newGame.id,
+                CategoryId: +CategoryId
+            })
 
             res.redirect('/games')
         } catch (error) {
@@ -317,7 +309,7 @@ class Controller {
             await Game.update(
                 {
                     gameName,
-                    imageUrl,
+                    imageUrl
                 },
                 {
                     where: {
@@ -326,24 +318,10 @@ class Controller {
                 },
             )
 
-            await GameCategory.destroy({
-                where: { GameId: +id },
-            })
-
-            if (CategoryId) {
-                let categoryList = CategoryId
-
-                if (typeof CategoryId === "string") {
-                    categoryList = [CategoryId]
-                }
-
-                for (let i = 0; i < categoryList.length; i++) {
-                    await GameCategory.create({
-                        GameId: +id,
-                        CategoryId: Number.parseInt(categoryList[i]),
-                    })
-                }
-            }
+            await GameCategory.update(
+                { CategoryId: +CategoryId },
+                { where: { GameId: +id } }
+            )
 
             res.redirect('/games')
         } catch (error) {
